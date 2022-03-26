@@ -11,7 +11,7 @@ dir()
 ## If the current directory does not contain the `data` directory, set the
 ## working directory to project root folder (the folder should contain the `data` directory
 ## Use `setwd()` if needed
-#setwd("/home/jdoe/Workspaces/dsc520")
+setwd("/Kim/Data Science/Bellevue Univ/BU_DSC/DSC520/")
 
 ## Load the file `data/tidynomicon/person.csv` to `person_df1` using `read.csv`
 ## Examine the structure of `person_df1` using `str()`
@@ -104,4 +104,4 @@ library(jsonlite)
 toJSON(scores_df)
 
 ## Convert the scores dataframe to JSON using the `toJSON()` function with the `pretty=TRUE` option
-toJSON(scores_df, pretty=TRUE)
+toJSON(scores_df, pretty = TRUE)
