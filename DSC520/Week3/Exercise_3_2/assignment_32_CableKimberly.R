@@ -23,12 +23,14 @@ str(community_df)
 nrow(community_df)
 ncol(community_df)
 
+
 #iii. Create a Histogram of the HSDegree variable
 #     Include bin size, Title, X/Y axis labels
 ggplot(community_df, aes(HSDegree)) + 
     ggtitle("HS Degrees per County") +
     xlab("Number of HS Degrees") + ylab("% of HS Degrees") +
     geom_histogram(bins = 10)
+
 
 # iv Answer the following questions
 #   1. Based on  what you see in the histogram, is the data distributed unimodal?
