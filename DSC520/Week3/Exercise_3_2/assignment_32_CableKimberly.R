@@ -77,9 +77,14 @@ ggplot(mapping = aes(sample = community_df$HSDegree)) +
 library(pastecs)
 round(stat.desc(community_df$HSDegree, basic = FALSE, norm = TRUE), digits = 3)
 
+
 # vii. Explanation of the results produced for skew, kurtosis, and z-scores.
 #      and explain how a change in the sample size may change your explanation.
 #   skew: it is negative so the distribution is negatively skewed
 #   kurtosis: it is positive so the distribution is pointy and heavily tailed
 #   z-scores: Skew: significant skew as absolute number > 1
 #             Kurtosis: significant kurtosis as abs number > 1
+#   A change in sample size affects the z-scores. The smaller sample sizes you
+#   can use the z-scores in the desc() function but for larger sample sizes
+#   you it is best to look at the shape of the distribution visually and consider
+#   the actual values of the skew and kurtosis not their normalized values
