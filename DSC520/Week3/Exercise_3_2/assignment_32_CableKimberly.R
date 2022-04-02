@@ -58,8 +58,9 @@ ggplot(community_df, aes(HSDegree)) +
 #        than not so the model would be biased.
 
 # v. Create a Probability Plot of the HSDegree variable
-#qplot(sample = community_df$HSDegree, stat = "qq")
-ggplot() + geom_qq(aes(sample = community_df$HSDegree))
+ggplot(mapping = aes(sample = community_df$HSDegree)) + 
+      stat_qq() + stat_qq_line(color = 2)
+
       
 # vi. Answer the following based on the probability plot
 #   1. Is the distribution approximately normal?
