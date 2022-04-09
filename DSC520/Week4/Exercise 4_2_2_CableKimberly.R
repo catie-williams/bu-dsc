@@ -9,7 +9,7 @@ library(plyr)
 theme_set(theme_minimal())
 
 ## Set the working directory to the root of your DSC 520 directory
-setwd("/Kim/Data Science/Bellevue Univ/DSC 520/Week 4/Exercise_4_2/")
+setwd("/Kim/Data Science/Bellevue Univ/DSC 520/Week4")
 
 ## Check your current working directory
 getwd()
