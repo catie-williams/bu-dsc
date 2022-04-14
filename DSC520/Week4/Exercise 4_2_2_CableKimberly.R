@@ -18,14 +18,17 @@ getwd()
 housing_df = read_excel("data/week-6-housing.xlsx")
 
 # a - Use apply on a variable
+# get the average Sale_Price and put it in a vector
 salesPrice_mean <- sapply(housing_df['Sale_Price'], mean)
 salesPrice_mean
 
 # b - use aggregate on a variable
+# get the average Sale Price per zoning
 zoningPrice_agg <- aggregate(Sale_Price ~ current_zoning, housing_df, mean)
 zoningPrice_agg
 
 # c - use plyr (split some data, perform a modification, bring back together)
+# get the average Sale Price per month per year
 salesPrice_byMonth_mean <- ddply(housing_df, .(format(Sale_Date, "%m-%Y")), 
                                  summarize, monthly_mean = mean(Sale_Price))
 salesPrice_byMonth_mean
