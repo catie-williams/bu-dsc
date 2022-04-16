@@ -96,6 +96,11 @@ head(housing_SalesPrice_classes)
 
 housing_all_classes <- housing6_df %>% pmap_chr(class)
 
+#    keep
+housing6_df %>% select(square_feet_total_living) %>%  
+    keep(function(x) mean(x) > 2500)
+
+
 # c. Use the cbind and rbind function on your dataset
 
 #    cbind
