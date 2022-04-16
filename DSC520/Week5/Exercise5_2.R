@@ -76,7 +76,7 @@ s_stuff
 
 #    Arrange
 #       get the average sales price by zip code and sort by the average
-average_price_per_zip <- housing_df6 %>% 
+average_price_per_zip <- housing6_df %>% 
     group_by(zip5) %>% 
     summarize(AvgPrice = mean(Sale_Price)) %>% 
     arrange(AvgPrice)
