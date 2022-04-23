@@ -3,9 +3,9 @@ title: "ASSIGNMENT 4"
 author: "Kimberly Cable"
 date: '2022-04-23'
 output:
+  html_document: default
   word_document: default
   pdf_document: default
-  html_document: default
 bibliography: bibliography.bib
 ---
 
@@ -46,6 +46,8 @@ theme_set(theme_minimal())
 heights_df <- read.csv("data/r4ds/heights.csv")
 covid_df <- read.csv("data/nytimes/covid-19-data/us-states.csv")
 
+covid_df$date <- as.Date(covid_df$date)
+
 california_df <- covid_df[ which( covid_df$state == "California"), ]
 ny_df <- covid_df[ which( covid_df$state == "New York"), ]
 florida_df <- covid_df[ which( covid_df$state == "Florida"), ]
@@ -55,9 +57,9 @@ florida_df <- covid_df[ which( covid_df$state == "Florida"), ]
 ## NY Times COVID-19 Data
 ```{r covid19, echo = FALSE, fig.align = 'center', fig.width = 6}
 ggplot(data = florida_df, aes(x = date, group = 1)) +
-  geom_line(aes(y = cases, colour = "Florida")) +
-  geom_line(data = ny_df, aes(y = cases, colour = "New York")) +
-  geom_line(data = california_df, aes(y = cases, colour = "California")) +
+  geom_line(aes(y = cases, colour = "Florida"), size = 2) +
+  geom_line(data = ny_df, aes(y = cases, colour = "New York"), size = 2) +
+  geom_line(data = california_df, aes(y = cases, colour = "California"), size = 2) +
   scale_colour_manual("State",
                       breaks = c("Florida", "New York", "California"),
                       values = c("Florida" = "darkred", 
