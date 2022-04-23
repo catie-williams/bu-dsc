@@ -100,12 +100,6 @@ require(pander)
 panderOptions('table.split.table', Inf)
 set.caption("One Ring to Rule Them All")
 
-name <- c("Aragon", "Bilbo", "Frodo", "Galadriel", "Sam", "Gandalf", "Legolas", "Sauron", "Gollum")
-race <- c("Men", "Hobbit", "Hobbit", "Elf", "Hobbit", "Maia", "Elf", "Maia", "Hobbit")
-in_fellowship <- c('Yes', 'No', 'Yes', 'No', 'Yes', 'Yes', 'Yes', 'No', 'No')
-ring_bearer <- c('No', 'Yes', 'Yes', 'No', 'Yes', 'Yes', 'No', 'Yes', 'Yes')
-age <- c(88, 129, 51, 7000, 36, 2019, 2931, 7052, 589)
-characters_df <- data.frame(name, race, in_fellowship, ring_bearer, age)
 colnames(characters_df) <- c("Name", "Race", "In Fellowship?", "Ring Bearer?", "Age")
 pander(characters_df, style = 'simple')
 ```
