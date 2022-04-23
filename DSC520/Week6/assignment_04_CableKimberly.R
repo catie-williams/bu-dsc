@@ -41,7 +41,7 @@ head(covid_df)
 
 ## Parse the date column using `as.Date()`
 class(covid_df$date)
-covid_df$date <- as.Date(covid_df$date, "%Y-%m-%d")
+covid_df$date <- as.Date(covid_df$date)
 head(covid_df)
 class(covid_df$date)
 
