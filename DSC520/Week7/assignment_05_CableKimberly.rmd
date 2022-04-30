@@ -1,10 +1,12 @@
 ---
-title: "Week 7: Assignments 7.2.1 and 7.2.2"
+title: 'Week 7: Assignments 7.2.1 and 7.2.2'
 author: "Kimberly Cable"
-date: April 30 2022
+date: "April 30 2022"
 output:
-  
   pdf_document: default
+  html_document:
+    df_print: paged
+  word_document: default
 ---
 
 ## Assignment 7.2.1
@@ -46,6 +48,7 @@ cor(tech_spending, suicides)
 
 ```
 
+\newpage
 ## Assignment 7.2.2
 
 **As a data science intern with newly learned knowledge in skills in statistical correlation and R programming, you will analyze the results of a survey recently given to college students. You learn that the research question being investigated is: "Is there a significant relationship between the amount of time spent reading and the time spent watching television?" You are also interested if there are other significant relationships that can be discovered?**
@@ -175,9 +178,9 @@ coefDetermination
 
 ```
 
-The Correlation Coefficient is -0.88 =\> The Coefficient of Determination is 78%
+The Correlation Coefficient is -0.88 and the Coefficient of Determination is 78%
 
-We can say that Time Watching TV shares 78% of the variability of Time Reading.
+We can say that Time Watching TV shares 78% of the variability of Time Reading and 22% does not.
 
 ### Question: *vi*
 
@@ -213,6 +216,7 @@ Significance of the partial Correlation between Time Reading and Time TV with Ge
 pcor.test(partialCorr, 1, 11)
 ```
 
-The correlation between Watching TV and Reading is the same even with the controlling variable of Gender so it is the same no matter if you are male or female. Even the Coefficient of determination is the same.
+Looking at the correlation and coefficient with gender as the controlling factor tells me that neither being
+female or male has any effect on the relationship between Time Reading and Time TV.
 
 ## References

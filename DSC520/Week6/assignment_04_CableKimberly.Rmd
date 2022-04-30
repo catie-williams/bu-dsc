@@ -3,13 +3,13 @@ title: "ASSIGNMENT 4"
 author: "Kimberly Cable"
 date: '2022-04-23'
 output:
+  word_document: default
   html_document: default
   pdf_document: default
-  word_document: default
 bibliography: bibliography.bib
 ---
 
-# Assignment 4 - Part 1
+# Part 1
 
 ```{r setup, echo = FALSE}
 ## Load the ggplot2 package
@@ -20,7 +20,7 @@ theme_set(theme_minimal())
 ## Set the working directory to the root of your DSC 520 directory
 
 ```{r directory, echo = FALSE}
-# setwd("/Kim/Data Science/Bellevue Univ/BU_DSC/DSC520/Week6")
+#setwd("/Kim/Data Science/Bellevue Univ/BU_DSC/DSC520/Week6")
 ```
 
 ## Load the `data/r4ds/heights.csv` to
@@ -160,7 +160,7 @@ ggplot(data = florida_df, aes(x = date, group = 1)) +
 ```
 
 \newpage
-# Assignment 4 - Part 2
+# Part 2
 # Markdown Basics
 
 ## Favorite Foods
@@ -246,7 +246,7 @@ characters_df <- data.frame(name, race, in_fellowship, ring_bearer, age)
 knitr::kable(characters_df, caption = "One Ring to Rule Them All")
 ```
 
-
+\newpage
 ## Pandoc Table
 ```{r pandocTable, echo = FALSE, results = 'asis'}
 library(pander)
