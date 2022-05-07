@@ -1,0 +1,41 @@
+---
+title: "Intelligence of Dogs"
+author: "Kimberly Cable"
+date: "05-14-2022"
+output:
+  pdf_document: default
+bibliography: bibliography.bib
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Intelligence of Dogs
+
+### Introduction
+We all love dogs. Some more than others but all in all a dog is man's best friend. I think what we enjoy about our furry companions is their ability to learn. From just being able to fetch a ball and bring it back to helping police locate the missing to alerting their companion that they are about to have a seizure. Dogs are amazing animals.
+
+### Research Questions
+Studies have been done on which breeds are more intelligent than others, but I was curious about if a dog’s weight has anything to do with how smart they are.  
+- Are bigger dogs smarter than smaller dogs?
+- Does the classification of a dog really tell their intelligence level?
+- Does their heterozygosity have anything to do with their intelligence?
+- Within a classification, do the larger breeds fair better than the smaller ones for intelligence?
+
+### Approach
+
+### How you approad address (fully or partially) the problem
+
+### Data (Minimum of 3 Datasets - but no requirement on number of fields or rows)
+* dog_intelligence.csv [@intelligence]
+* Table_4_Heterozygosity_85_breeds.csv [@intelligence]
+* AKC Breed Info.csv [@AKCBreeds]
+
+### Required Packages
+
+### Plots and Table Needs
+
+### Questions for future steps
+
+# References
