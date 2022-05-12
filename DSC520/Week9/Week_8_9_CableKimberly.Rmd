@@ -271,27 +271,38 @@ adjusted_r_squared
 ```
 # Housing Data
 
-```{r imports, include = FALSE}
+```{r, include = FALSE}
 library(readxl)
 library(dplyr)
 library(magrittr)
 library(Hmisc)
 library(lm.beta)
+library(car)
+
+options(scipen=999)
 ```
+
 
 ### Data for this assignment is focused on real estate transactions recorded from 1964 to 2016 and can be found in Housing.xlsx. Using your skills in statistical correlation, multiple regression, and R programming, you are interested in the following variables: Sale Price and several other possible predictors.
 
 ### If you worked with the Housing dataset in previous week – you are in luck, you likely have already found any issues in the dataset and made the necessary transformations. If not, you will want to take some time looking at the data with all your new skills and identifying if you have any clean up that needs to happen.
 
-```{r housingData, echo = FALSE}
 ## Load the `data/week-6-housing.csv` to
+```{r, echo = FALSE}
 housing_df = read_excel("data/week-6-housing.xlsx")
 housing_df %>% head(4)
 ```
 
 
 ### i Explain any transformations or modifications you made to the dataset
-```{r totalBath, echo = FALSE}
+
+I created a variable names total_bath_count that combined bath_full, bath_half, and bath_3qr
+
+I renamed Sale Price to Sale_Price
+
+I renamed Sale Date to Sale_Date
+
+```{r, echo = FALSE}
 num_baths <- function(bath_full, bath_half, bath_3qtr)
 {
     ifelse (bath_full > 0, total <- bath_full * 1, NA)
@@ -307,9 +318,7 @@ housing_df['total_bath_count'] <- num_baths(
     bath_full = housing_df$bath_full_count, 
     bath_half = housing_df$bath_half_count, 
     bath_3qtr = housing_df$bath_3qtr_count)
-```
 
-```{r transformations, echo = FALSE}
 colnames(housing_df)[2] <- "Sale_Price"
 colnames(housing_df)[1] <- "Sale_Date"
 
@@ -319,50 +328,57 @@ housing_df %>% head(4)
 
 ### ii: Create two variables; one that will contain the variables Sale Price and Square Foot of Lot (same variables used from previous assignment on simple regression) and one that will contain Sale Price and several additional predictors of your choice. Explain the basis for your additional predictor selections.
 
-For my additional predictors, I chose total_bath_count, year_built, square_feet_total_living, and bedroom because they traditionally are used to calculate the price of a house
+For my additional predictors, I chose total_bath_count, square_feet_total_living, and bedrooms because they traditionally are used to calculate the price of a house
 
-```{r newVariable1, echo = FALSE}
-price_sqft <- select(housing_df, c(Sale_Price, sq_ft_lot))
-price_sqft %>% head(5)
-```
+```{r}
+housing_df_model1 <- lm(Sale_Price ~ sq_ft_lot, data = housing_df)
 
-```{r newVariable2, echo = FALSE}
-price_predictors <- select(housing_df, c(Sale_Price, total_bath_count, year_built, 
-                                         square_feet_total_living, bedrooms))
-price_predictors %>% head(5)
+
+housing_df_model2 <- lm(Sale_Price ~ total_bath_count + square_feet_total_living + 
+                            bedrooms, data = housing_df)
 ```
 
 
 ### iii: Execute a summary() function on two variables defined in the previous step to compare the model results. What are the R2 and Adjusted R2 statistics? Explain what these results tell you about the overall model. Did the inclusion of the additional predictors help explain any large variations found in Sale Price?
-```{r model1, echo = FALSE}
-model1 <- lm(Sale_Price ~ sq_ft_lot, data = price_sqft)
-summary(model1)
+
+```{r, echo = FALSE}
+summary(housing_df_model1)
 ```
 
-The linear regression model for Sales Price and Square Feet per Lot is an 
-R^2 = 0.01435 tells us Sq feet per lot only accounts for 1.4% of the variation
-in the Sales Price.
+The linear regression model for Sales Price and Square Feet per Lot is an R2 = 0.01435 tells us sq feet per lot only accounts for 1.4% of the variation in the Sales Price.
 
-```{r model2, echo = FALSE}
-model2 <- lm(Sale_Price ~ zip5 + total_bath_count + year_built, + 
-               square_feet_total_living + bedrooms, data = price_predictors)
-summary(model2)
+```{r, echo = FALSE}
+summary(housing_df_model2)
 ```
 
-The linear regression model for Sales Price, zip5, total_bath_count, year_built, 
-square_feet_total_living, and bedrooms is an R^2 = 0.05 tells us that adding other variables raises the
-percentage to 5% in the Sales Price.
+The linear regression model for Sales Price, total_bath_count, square_feet_total_living, and bedrooms is an R2 = 0.2096 tells us that adding other variables accounts for 1.2% of the price of a house.
 
-The adjusted R^2 with 1 variable is 0.01428 and with 5 variables it is 0.04984 which indicates that adding
-the additional variables does help but not a lot.
+The adjusted R2 with 1 variable is 0.01428 and with 3 variables it is 0.295 which indicates that adding the additional variables does help but not a lot.
 
+
+### iii: Execute a summary() function on two variables defined in the previous step to compare the model results. What are the R2 and Adjusted R2 statistics? Explain what these results tell you about the overall model. Did the inclusion of the additional predictors help explain any large variations found in Sale Price?
+
+```{r, echo = FALSE}
+summary(housing_df_model1)
+```
+
+The linear regression model for Sales Price and Square Feet per Lot is an R2 = 0.01435 tells us sq feet per lot only accounts for 1.4% of the variation in the Sales Price.
+
+```{r, echo = FALSE}
+summary(housing_df_model2)
+```
+
+The linear regression model for Sales Price, total_bath_count, square_feet_total_living, and bedrooms is an R2 = 0.2096 tells us that adding other variables accounts for 1.2% of the price of a house.
+
+The adjusted R2 with 1 variable is 0.01428 and with 3 variables it is 0.295 which indicates that adding the additional variables does help but not a lot.
 
 ### iv: Considering the parameters of the multiple regression model you have created. What are the standardized betas for each parameter and what do the values indicate?
 
-```{r, echo = FALSE}
-beta_model1 <- lm.beta(model1)
+```{r}
+beta_model1 <- lm.beta(housing_df_model1)
 beta_model1
 ```
+
 
 Standard Deviation of Sale_Price:
 
@@ -372,91 +388,149 @@ sd(housing_df$Sale_Price)
 
 Standard Deviation of sq_ft_lot:
 
-```{r, echo = FALSE}
+```{r, echo = FALSE} 
 sd(housing_df$sq_ft_lot)
 ```
 
-The standardized beta of 0.12 indicates that as the square footage of the lot increases by 56,933 sq ft,
-the Sales Price increases by .12 standard deviations. So for every 56,933 sq ft increase, the Sales price 
-goes up by ($404,381 * .12) $48,525.72.
-
-```{r, echo = FALSE}
-beta_model2 <- lm.beta(model2)
+```{r}
+beta_model2 <- lm.beta(housing_df_model2)
 beta_model2
 ```
-Standard Deviation of zip5:
-
-```{r, echo = FALSE}
-sd(housing_df$zip5)
-```
-The standardized beta of 0.063 indicates that as the zip code changes by 1.70 the Sales increases by 0.063 standard deviations. So for every 1.7 change in zip code, the Sales price goes up by ($404,381 * .63) $254,760.03.
 
 Standard Deviation of total_bath_count:
 
-```{r, echo = FALSE}
+```{r, echo = FALSE} 
 sd(housing_df$total_bath_count)
 ```
-The standardized beta of 0.165 indicates that as the bath count increases by 0.70 the Sales increases by 0.165 standard deviations. So for every 0.70 change in bath count, the Sales price goes up by ($404,381 * .165) $66,722.87.
 
-Standard Deviation of year_built:
+As the number of bath increase by 1 standard deviation (0.70), Sales Price increase by 0.49 standard deviations.  So for every 0.7 bathrooms, Sales Price goes up by ($404,381 * 0.049) $19,815.
+
+Standard Deviation of square_feet_total_living:
 
 ```{r, echo = FALSE}
-sd(housing_df$year_built)
+sd(housing_df$square_feet_total_living)
 ```
-The standardized beta of 0.088 indicates that as the year the house was built increases by 17.22, the Sales increases by 0.088 standard deviations. So for every 17.22 increase in the year built, the Sales price goes up by ($404,381 * .088) $35,585.53.
+
+As the number of sq ft of living space increase by 1 standard deviation (990 sq ft), Sales Price increases by 0.453 standard deviations. So for every 990 sq ft added, Sales Price goes up by ($404,381 * 0.453) $183,185.
+
+Standard Deviation of bedrooms:
+
+```{r, echo = FALSE}
+sd(housing_df$bedrooms)
+```
+
+As the number of bedrooms increases by 1 standard deviation (.88), Sales Price decrease by -0.060 standard deviations. So for every .88 bedrooms added, Sales Price goes down by ($404,381 * -0.06) $24,263.
+
 
 ### v: Calculate the confidence intervals for the parameters in your model and explain what the results indicate.
-```{r, echo = FALSE}
 
+```{r}
+model2.confInt <- confint(housing_df_model2)
+model2.confInt
 ```
 
-### vi: Assess the improvement of the new model compared to your original model (simple regression model) by testing whether this change is significant by performing an analysis of variance.
-```{r, echo = FALSE}
+None of the confidence intervals cross 0 but their intervals are not very small so they are less representative in calculating the sales price but are significant
 
+### vi: Assess the improvement of the new model compared to your original model (simple regression model) by testing whether this change is significant by performing an analysis of variance.
+
+```{r, echo = FALSE}
+anova(housing_df_model1, housing_df_model2)
 ```
 
 ### vii: Perform casewise diagnostics to identify outliers and/or influential cases, storing each function's output in a dataframe assigned to a unique variable name.
-```{r, echo = FALSE}
 
+```{r}
+housing_df$residuals <- resid(housing_df_model2)
+housing_df$standarized.residuals <- rstandard(housing_df_model2)
+housing_df$studentized.residuals <- rstudent(housing_df_model2)
+housing_df$cooks.distance <- cooks.distance(housing_df_model2)
+housing_df$dfbeta <- dfbeta(housing_df_model2)
+housing_df$dffit <- dffits(housing_df_model2)
+housing_df$leverage <- hatvalues(housing_df_model2)
+housing_df$covariance.ratios <- covratio(housing_df_model2)
+
+head(housing_df)
 ```
 
 ### viii: Calculate the standardized residuals using the appropriate command, specifying those that are +-2, storing the results of large residuals in a variable you create.
-```{r, echo = FALSE}
 
+```{r}
+housing_df$large.residuals <- housing_df$standarized.residuals > 2 | 
+  housing_df$standarized.residuals < -2
 ```
 
 ### ix: Use the appropriate function to show the sum of large residuals.
-```{r, echo = FALSE}
 
+```{r}
+sum(housing_df$large.residuals)
 ```
+There are 322 cases that have large residuals. So only 2.5% (322/ 12865) of the data was outside the limits.
 
 ### x: Which specific variables have large residuals (only cases that evaluate as TRUE)?
-```{r, echo = FALSE}
 
+```{r}
+housing_df[housing_df$large.residuals, c('Sale_Price', 'total_bath_count', 
+                                         'square_feet_total_living', 'bedrooms', 
+                                         'standarized.residuals')]
 ```
 
 ### xi: Investigate further by calculating the leverage, cooks distance, and covariance rations. Comment on all cases that are problematics.
-```{r, echo = FALSE}
 
+```{r}
+large_residuals <- housing_df[housing_df$large.residuals, 
+                              c('cooks.distance', 'leverage', 
+                                'covariance.ratios')]
+large_residuals
 ```
+
+No Cooks distance is > 1 so none of the cases is having an undue influence on the model.
+
+```{r}
+leverage_threshold <- (4 / 12865) * 4
+
+large_residuals['large.leverage'] <- 
+  large_residuals$leverage > leverage_threshold
+
+sum(large_residuals$large.leverage)
+```
+The average threshold is .0012 so there are only 45 cases greater than the average. With this we seems to have a fairly reliable model that hasnt been unduly influenced by any subset of cases.
+
 
 ### xii: Perform the necessary calculations to assess the assumption of independence and state if the condition is met or not.
-```{r, echo = FALSE}
 
+```{r}
+durbinWatsonTest(housing_df_model2)
 ```
+
+The durbin watson statistic is 0.539 which is not close to 2 so it has not been met
+
 
 ### xiii: Perform the necessary calculations to assess the assumption of no multicollinearity and state if the condition is met or not.
-```{r, echo = FALSE}
 
+```{r}
+vif(housing_df_model2)
+
+1 / vif(housing_df_model2)
+
+mean(vif(housing_df_model2))
 ```
+
+The VIF for each variable is below 10, and average VIF for each variable is greater than 1, and the tolerance for all three are above 0.2, and the average VIF is close to 1 so we can conclude that there is no collinearity within the data.
+
 
 ### xiv: Visually check the assumptions related to the residuals using the plot() and hist() functions. Summarize what each graph is informing you of and if any anomalies are present.
-```{r, echo = FALSE}
 
+```{r, echo = FALSE}
+hist(housing_df$studentized.residuals)
 ```
+
+```{r, echo = FALSE}
+plot(housing_df_model2)
+```
+
+
+The plots show that is it not normal and skewed
 
 ### xv: Overall, is this regression model unbiased? If an unbiased regression model, what does this tell us about the sample vs. the entire population model?
-```{r, echo = FALSE}
 
-```
-
+The model overall is unbiased and should be ok for the general population.

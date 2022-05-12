@@ -14,18 +14,21 @@ knitr::opts_chunk$set(echo = TRUE)
 ## Intelligence of Dogs
 
 ### Introduction
-We all love dogs. Some more than others but all in all a dog is man's best friend. I think what we enjoy about our furry companions is their ability to learn. From just being able to fetch a ball and bring it back to helping police locate the missing to alerting their companion that they are about to have a seizure. Dogs are amazing animals.
+We all love dogs. Some more than others but all in all, a dog is man's best friend. I think what we enjoy about our furry companions is their ability to learn. From just being able to fetch a ball and bring it back to helping police locate the missing to alerting their companion that they are about to have a seizure. Dogs are amazing animals.
 
 ### Research Questions
-Studies have been done on which breeds are more intelligent than others, but I was curious about if a dog’s weight has anything to do with how smart they are.  
-- Are bigger dogs smarter than smaller dogs?
-- Does the classification of a dog really tell their intelligence level?
-- Does their heterozygosity have anything to do with their intelligence?
-- Within a classification, do the larger breeds fair better than the smaller ones for intelligence?
+Studies have been done on which breeds are more intelligent than others, but I was curious if how big a dog was had anything to do with how smart they were.
+
+* Are bigger dogs smarter than smaller dogs?
+* Does the classification of a dog really tell their intelligence level?
+* Does their heterozygosity have anything to do with their intelligence?
+* Within a classification, do the larger breeds fair better than the smaller ones for intelligence?
 
 ### Approach
+I plan to look at how height, weight and heterozygosity have any affect on how intelligent a dog based on the percentage of times they can obey a command.
 
-### How you approad address (fully or partially) the problem
+### How your approach addresses (fully or partially) the problem
+With my approach it would partially answer whether or not how big a dog was and if it plays a part in the how smart they are.
 
 ### Data (Minimum of 3 Datasets - but no requirement on number of fields or rows)
 * dog_intelligence.csv [@intelligence]
@@ -33,9 +36,19 @@ Studies have been done on which breeds are more intelligent than others, but I w
 * AKC Breed Info.csv [@AKCBreeds]
 
 ### Required Packages
+ggplot2
+dplyr
+magritter
+Hmisc
+ggm
 
 ### Plots and Table Needs
+Histogram
+Scatter Plots
+CDF
+Linear Regression
 
 ### Questions for future steps
+To begin, I suppose you look at histograms of the different variables and then decide how to proceed.
 
 # References
