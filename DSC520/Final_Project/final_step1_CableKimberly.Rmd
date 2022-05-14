@@ -21,8 +21,9 @@ Studies have been done on which breeds are more intelligent than others, but I w
 
 * Are bigger dogs smarter than smaller dogs?
 * Does the classification of a dog really tell their intelligence level?
-* Does their heterozygosity have anything to do with their intelligence?
+* Does their heterozygosity (diversity in the genes) have anything to do with their intelligence?
 * Within a classification, do the larger breeds fair better than the smaller ones for intelligence?
+* Does their heterozygosity influence the number of reps a dog can do?
 
 ### Approach
 I plan to look at if height, weight and heterozygosity have any affect on how intelligent a dog is based on the percentage of times they can obey a command.

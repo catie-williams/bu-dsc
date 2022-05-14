@@ -12,17 +12,20 @@ theme_set(theme_minimal())
 getwd()
 
 ## Load data
-intelligence_df <- read.csv("data/dog_intelligence.csv")
+intelligence_df <- read.csv("Final_Project/data/dog_intelligence.csv")
 head(intelligence_df)
 
-breed_df <- read.csv("data/AKC Breed Info.csv")
+breed_df <- read.csv("Final_Project/data/AKC Breed Info.csv")
 head(breed_df)
 
-heterozygosity_df <- read.csv("data/Table_4_Heterozygosity_85_breeds.csv")
-head(heterozygosity_df)
+heterozygosity_4_df <- read.csv("Final_Project/data/Table_4_Heterozygosity_85_breeds.csv")
+head(heterozygosity_4_df)
+
+heterozygosity_5_df <- read.csv("Final_Project/data/Table_5_Expected_Heterozygosity_60_breeds.csv")
+head(heterozygosity_5_df)
 
 
-# Create New Dataframe from the Intelligence date
+# Create New Dataframe from the Intelligence data
 combined_df <- intelligence_df
 head(combined_df)
 
