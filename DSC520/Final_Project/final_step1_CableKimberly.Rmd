@@ -11,7 +11,7 @@ bibliography: bibliography.bib
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Intelligence of Dogs
+## Final Project - Step 1
 
 ### Introduction
 We all love dogs. Some more than others but all in all, a dog is man's best friend. I think what we enjoy most about our furry companions is their ability to learn. From just being able to fetch a ball and bring it back to helping the  police locate missing persons to alerting their companions that they are about to have a seizure. Dogs are amazing animals.
