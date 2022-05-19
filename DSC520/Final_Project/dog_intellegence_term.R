@@ -34,7 +34,12 @@ combined_df <- combined_df %>%
     inner_join(breed_df, by = c("Breed" = "Breed"))
 head(combined_df)
 
-# Join Heterozygosity to new combined df
+# Join Heterozygosity 4 to new combined df
 combined_df <- combined_df %>% 
-    inner_join(heterozygosity_df, by = c("Breed" = "Population"))
+    inner_join(heterozygosity_4_df, by = c("Breed" = "Population"))
+head(combined_df)
+
+# Join Heterozygosity 5 to new combined df
+combined_df <- combined_df %>% 
+    inner_join(heterozygosity_5_df, by = c("Breed" = "Breed"))
 head(combined_df)
