@@ -25,6 +25,7 @@ theme_set(theme_minimal())
 
 
 Load and read each of the datasets:
+
 * dog_intelligence.csv
 
 ```{r echo = FALSE}
@@ -52,6 +53,8 @@ head(heterozygosity_4_df)
 
 ```{r echo = FALSE}
 heterozygosity_5_df <- read.csv("Final_Project/data/Table_5_Expected_Heterozygosity_60_breeds.csv")
+colnames(heterozygosity_5_df)[2] <- 'Heterozygosity_x10_4' 
+
 head(heterozygosity_5_df)
 ```
 
@@ -60,6 +63,7 @@ Create New Dataframe from the Intelligence data
 
 ```{r echo = FALSE}
 combined_df <- intelligence_df
+
 head(combined_df)
 ```
 
@@ -69,6 +73,7 @@ Inner Join Breed data to new combined df on key Breed
 ```{r echo = FALSE}
 combined_df <- combined_df %>% 
     inner_join(breed_df, by = c("Breed" = "Breed"))
+
 head(combined_df)
 ```
 
@@ -77,6 +82,7 @@ Inner Join Heterozygosity 4 to new combined df on key Breed = Population
 ```{r echo = FALSE}
 combined_df <- combined_df %>% 
     inner_join(heterozygosity_4_df, by = c("Breed" = "Population"))
+
 head(combined_df)
 ```
 
@@ -85,10 +91,12 @@ Inner Join Heterozygosity 5 to new combined df on key Breed
 ```{r echo = FALSE}
 combined_df <- combined_df %>% 
     inner_join(heterozygosity_5_df, by = c("Breed" = "Breed"))
-combined_df
+
+head(combined_df)
 ```
 
 Convert n/a or na to empty cell
+
 ```{r echo = FALSE}
 combined_df[combined_df == 'n/a'] <- ''
 combined_df[combined_df == 'na'] <- ''
@@ -126,11 +134,12 @@ One could strictly look at the obey percentage without looking at the number of 
 
 ### How do you plan to slice and dice the data?
 
-* Add average weight to dataframe
+* Add average weight and height to dataframe
 
-```{r echo = false}
+```{r echo = FALSE}
 combined_df$avg.weight = rowMeans(combined_df[,c('weight_low_lbs', 'weight_high_lbs')], na.rm = TRUE)
 combined_df$avg.height = rowMeans(combined_df[,c('height_low_inches', 'height_high_inches')], na.rm = TRUE)
+
 head(combined_df)
 ```
 
@@ -141,8 +150,6 @@ summary(combined_df)
 ```
 
 ### What types of plots and tables will help you illustrate the findings to your questions?
-
-* Histogram of obey
 
 ```{r echo = FALSE}
 ggplot(combined_df, aes(obey)) + 
@@ -155,7 +162,6 @@ ggplot(combined_df, aes(obey)) +
                               color = 'red', size = 1)
 ```
 
-* Histogram of average weight
 
 ```{r echo = FALSE}
 ggplot(combined_df, aes(avg.weight)) + 
@@ -168,7 +174,6 @@ ggplot(combined_df, aes(avg.weight)) +
                               color = 'red', size = 1)
 ```
 
-* Histogram of average height
 
 ```{r echo = FALSE}
 ggplot(combined_df, aes(avg.height)) + 
@@ -181,7 +186,6 @@ ggplot(combined_df, aes(avg.height)) +
                               color = 'red', size = 1)
 ```
 
-* Histogram of Heterozygosity
 
 ```{r echo = FALSE}
 ggplot(combined_df, aes(Heterozygosity)) + 
@@ -194,16 +198,15 @@ ggplot(combined_df, aes(Heterozygosity)) +
                               color = 'red', size = 1)
 ```
 
-* Histogram of Heterozygosity..x10.4..x
 
 ```{r echo = FALSE}
-ggplot(combined_df, aes(Heterozygosity..x10.4..x)) + 
-    labs(title = "Histogram Heterozygosity..x10.4.", 
-        x = "Heterozygosity..x10.4.", y = "Frequency") +
+ggplot(combined_df, aes(Heterozygosity_x10_4)) + 
+    labs(title = "Histogram Heterozygosity_x10_4", 
+        x = "Heterozygosity_x10_4", y = "Frequency") +
     geom_histogram(bins = 10, aes(y = ..density..), color = "black", fill = "black") +
     stat_function(fun = dnorm, 
-                  args = list(mean = mean(combined_df$Heterozygosity..x10.4..x, na.rm = TRUE), 
-                              sd = sd(combined_df$Heterozygosity..x10.4..x, na.rm = TRUE)),
+                  args = list(mean = mean(combined_df$Heterozygosity_x10_4, na.rm = TRUE), 
+                              sd = sd(combined_df$Heterozygosity_x10_4, na.rm = TRUE)),
                               color = 'red', size = 1)
 ```
 
@@ -212,19 +215,45 @@ ggplot(combined_df, aes(Heterozygosity..x10.4..x)) +
 ```{r echo = FALSE}
 scatter <- ggplot(combined_df, aes(obey, avg.weight))
 scatter + geom_point() +
+    scale_x_continuous(n.breaks = 10) +
     geom_smooth(method = 'lm', alpha = 0.1) +
-                    labs(x = "Obey Percentage", y = "Average Weight")
+                    labs(x = "Obey Percentage", y = "Average Weight") +
+    ggtitle('Obey Percentage and Average Weight')
 ```
-* Scatter Plot of obey and Heterozygosity..x10.4..x
+* Scatter Plot of obey and Heterozygosity_x10_4
 
 ```{r echo = FALSE}
-scatter <- ggplot(combined_df, aes(obey, Heterozygosity..x10.4..x))
+scatter <- ggplot(combined_df, aes(obey, Heterozygosity_x10_4))
 scatter + geom_point() +
+    scale_x_continuous(n.breaks = 10) +
     geom_smooth(method = 'lm', alpha = 0.1) +
-                    labs(x = "Obey Percentage", y = "Heterozygosity x10.4")
+                    labs(x = "Obey Percentage", y = "Heterozygosity x10.4") +
+    ggtitle('Obey Percentage and Heterozygosity x10.4')
 ```
 
+Correlation between obey percentage and avg.weight
+
+```{r echo = FALSE}
+cor.test(combined_df$obey, combined_df$avg.weight, use = "complete.obs")
+```
+Since the correlation is 0.19 and the p-value is 0.39 we can say that the correlation between the two variables is not significant.  Also, the intervals cross 0 so as one goes up the other goes up but then it is reversed.
+
+Correlation between obey percentage and Heterozygosity_x10_4
+
+```{r echo = FALSE}
+cor.test(combined_df$obey, combined_df$Heterozygosity_x10_4, use = "complete.obs")
+```
+Since the correlation is 0.09 and the p-value is 0.66 we can say that the correlation between the two variables is not significant.  Also, the intervals cross 0 so as one goes up the other goes up but then it is reversed.
 
 ### Do you plan on incorporating any machine learning techniques to answer your research questions? Explain.
 
+```{r echo = FALSE}
+combined_model <- lm(obey ~ avg.weight + avg.height + Heterozygosity_x10_4, data = combined_df)
+
+summary(combined_model)
+```
+Looking at the Adjusted R-squared of -0.37 and all p-values for the variables are not significant it does not look like any other the variables help with the percentage a dog can obey.
+
 ### Questions for future steps.
+
+More research would need to be done to find out if any data can be linked to a dog's intelligence.
