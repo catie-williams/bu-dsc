@@ -1,7 +1,7 @@
 ---
 title: "Intelligence of Dogs"
 author: "Kimberly Cable"
-date: "05-14-2022"
+date: "05-21-2022"
 output:
   pdf_document: default
 bibliography: bibliography.bib
@@ -26,7 +26,7 @@ theme_set(theme_minimal())
 
 Load and read each of the datasets:
 
-* dog_intelligence.csv
+* **dog_intelligence.csv**
 
 ```{r echo = FALSE}
 intelligence_df <- read.csv("Final_Project/data/dog_intelligence.csv", 
@@ -35,21 +35,21 @@ intelligence_df <- read.csv("Final_Project/data/dog_intelligence.csv",
 head(intelligence_df)
 ```
 
-* AKC Breed Info.csv
+* **AKC Breed Info.csv**
 
 ```{r echo = FALSE}
 breed_df <- read.csv("Final_Project/data/AKC Breed Info.csv")
 head(breed_df)
 ```
 
-* Table_4_Heterozygosity_85_breeds.csv
+* **Table_4_Heterozygosity_85_breeds.csv**
 
 ```{r echo = FALSE}
 heterozygosity_4_df <- read.csv("Final_Project/data/Table_4_Heterozygosity_85_breeds.csv")
 head(heterozygosity_4_df)
 ```
 
-* Table_5_Expected_Heterozygosity_60_breeds.csv
+* **Table_5_Expected_Heterozygosity_60_breeds.csv**
 
 ```{r echo = FALSE}
 heterozygosity_5_df <- read.csv("Final_Project/data/Table_5_Expected_Heterozygosity_60_breeds.csv")
@@ -59,7 +59,7 @@ head(heterozygosity_5_df)
 ```
 
 
-Create New Dataframe from the Intelligence data
+**Create New Dataframe from the Intelligence data**
 
 ```{r echo = FALSE}
 combined_df <- intelligence_df
@@ -68,7 +68,7 @@ head(combined_df)
 ```
 
 
-Inner Join Breed data to new combined df on key Breed
+**Inner Join Breed data to new combined df on key Breed**
 
 ```{r echo = FALSE}
 combined_df <- combined_df %>% 
@@ -77,7 +77,7 @@ combined_df <- combined_df %>%
 head(combined_df)
 ```
 
-Inner Join Heterozygosity 4 to new combined df on key Breed = Population
+**Inner Join Heterozygosity 4 to new combined df on key Breed = Population**
 
 ```{r echo = FALSE}
 combined_df <- combined_df %>% 
@@ -86,7 +86,7 @@ combined_df <- combined_df %>%
 head(combined_df)
 ```
 
-Inner Join Heterozygosity 5 to new combined df on key Breed
+**Inner Join Heterozygosity 5 to new combined df on key Breed**
 
 ```{r echo = FALSE}
 combined_df <- combined_df %>% 
@@ -95,7 +95,7 @@ combined_df <- combined_df %>%
 head(combined_df)
 ```
 
-Convert n/a or na to empty cell
+**Convert n/a or na to empty cell**
 
 ```{r echo = FALSE}
 combined_df[combined_df == 'n/a'] <- ''
@@ -103,7 +103,7 @@ combined_df[combined_df == 'na'] <- ''
 ```
 
 
-Convert obey to numeric
+**Convert obey to numeric**
 
 ```{r echo = FALSE}
 combined_df$obey <- gsub("%", "", as.character(combined_df$obey)) 
@@ -111,7 +111,7 @@ combined_df$obey <- gsub("%", "", as.character(combined_df$obey))
 combined_df$obey <- as.numeric(combined_df$obey) / 100
 ```
 
-Convert height and weight to numeric
+**Convert height and weight to numeric**
 
 ```{r echo = FALSE}
 combined_df$height_low_inches <- as.numeric(combined_df$height_low_inches)
@@ -134,7 +134,7 @@ One could strictly look at the obey percentage without looking at the number of 
 
 ### How do you plan to slice and dice the data?
 
-* Add average weight and height to dataframe
+* **Add average weight and height to dataframe**
 
 ```{r echo = FALSE}
 combined_df$avg.weight = rowMeans(combined_df[,c('weight_low_lbs', 'weight_high_lbs')], na.rm = TRUE)
@@ -210,7 +210,7 @@ ggplot(combined_df, aes(Heterozygosity_x10_4)) +
                               color = 'red', size = 1)
 ```
 
-* Scatter Plot of obey and avg.weight
+* **Scatter Plot of obey and avg.weight**
 
 ```{r echo = FALSE}
 scatter <- ggplot(combined_df, aes(obey, avg.weight))
@@ -220,7 +220,7 @@ scatter + geom_point() +
                     labs(x = "Obey Percentage", y = "Average Weight") +
     ggtitle('Obey Percentage and Average Weight')
 ```
-* Scatter Plot of obey and Heterozygosity_x10_4
+* **Scatter Plot of obey and Heterozygosity_x10_4**
 
 ```{r echo = FALSE}
 scatter <- ggplot(combined_df, aes(obey, Heterozygosity_x10_4))
@@ -231,19 +231,25 @@ scatter + geom_point() +
     ggtitle('Obey Percentage and Heterozygosity x10.4')
 ```
 
-Correlation between obey percentage and avg.weight
+* **Correlation between obey percentage and avg.weight**
 
 ```{r echo = FALSE}
 cor.test(combined_df$obey, combined_df$avg.weight, use = "complete.obs")
 ```
 Since the correlation is 0.19 and the p-value is 0.39 we can say that the correlation between the two variables is not significant.  Also, the intervals cross 0 so as one goes up the other goes up but then it is reversed.
 
-Correlation between obey percentage and Heterozygosity_x10_4
+* **Correlation between obey percentage and Heterozygosity_x10_4**
 
 ```{r echo = FALSE}
 cor.test(combined_df$obey, combined_df$Heterozygosity_x10_4, use = "complete.obs")
 ```
 Since the correlation is 0.09 and the p-value is 0.66 we can say that the correlation between the two variables is not significant.  Also, the intervals cross 0 so as one goes up the other goes up but then it is reversed.
+
+* **Correlation between avg.weight and Heterozygosity_x10_4**
+
+```{r echo = FALSE}
+cor.test(combined_df$avg.weight, combined_df$Heterozygosity_x10_4, use = "complete.obs")
+```
 
 ### Do you plan on incorporating any machine learning techniques to answer your research questions? Explain.
 
@@ -256,4 +262,4 @@ Looking at the Adjusted R-squared of -0.37 and all p-values for the variables ar
 
 ### Questions for future steps.
 
-More research would need to be done to find out if any data can be linked to a dog's intelligence.
+More research would need to be done to find out if any other data can be linked to a dog's intelligence.
