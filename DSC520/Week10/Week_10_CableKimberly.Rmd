@@ -25,6 +25,7 @@ thoracic_df <- readARFF('data/ThoraricSurgery.arff' )
 
 head(thoracic_df)
 ```
+
 __Data Dictionary:__
 
 1. DGN: Diagnosis - specific combination of ICD-10 codes for primary and secondary as well multiple tumours if any (DGN3,DGN2,DGN4,DGN6,DGN5,DGN8,DGN1)
