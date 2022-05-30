@@ -240,10 +240,34 @@ scatter + geom_point() +
     ggtitle('Obey Percentage and Average Weight')
 ```
 
+* **Scatter Plot of obey and avg.weight colored by height**
+
+```{r}
+scatter <- ggplot(combined_complete, aes(obey, avg.weight, col = avg.height))
+scatter + geom_point() +
+    scale_x_continuous(n.breaks = 10) +
+    geom_smooth(method = 'lm', alpha = 0.1) +
+                    labs(x = "Obey Percentage", y = "Average Weight") +
+    ggtitle('Obey Percentage and Average Weight')
+```
+
+
+
 * **Scatter Plot of obey and Heterozygosity_x10_4**
 
 ```{r}
 scatter <- ggplot(combined_complete, aes(obey, Heterozygosity_x10_4))
+scatter + geom_point() +
+    scale_x_continuous(n.breaks = 10) +
+    geom_smooth(method = 'lm', alpha = 0.1) +
+                    labs(x = "Obey Percentage", y = "Heterozygosity x10.4") +
+    ggtitle('Obey Percentage and Heterozygosity x10.4')
+```
+
+* **Scatter Plot of obey and Heterozygosity_x10_4 colored by average weight**
+
+```{r}
+scatter <- ggplot(combined_complete, aes(obey, Heterozygosity_x10_4, col = avg.weight))
 scatter + geom_point() +
     scale_x_continuous(n.breaks = 10) +
     geom_smooth(method = 'lm', alpha = 0.1) +
@@ -269,6 +293,10 @@ Since the correlation is 0.09 and the p-value is 0.66 we can say that the correl
 
 ```{r}
 cor.test(combined_df$avg.weight, combined_df$Heterozygosity_x10_4, use = "complete.obs")
+```
+* **Correlation between all variables**
+```{r}
+cor(combined_df[,unlist(lapply(combined_df, is.numeric))], use = "complete.obs")
 ```
 
 ### Do you plan on incorporating any machine learning techniques to answer your research questions? Explain.
