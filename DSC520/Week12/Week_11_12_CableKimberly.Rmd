@@ -23,6 +23,8 @@ library(ggplot2)
 library(magrittr)
 library(caTools)
 library(class)
+
+set.seed(10)
 ```
 
 
@@ -343,7 +345,9 @@ clusters = c(1, 3, 5, 10, 15, 20, 25)
 data <- c('Binary', 'Binary', 'Binary', 'Binary', 'Binary', 'Binary', 'Binary',
         'Trinary',  'Trinary', 'Trinary', 'Trinary', 'Trinary', 'Trinary', 'Trinary')
 accuracies = c(accuracy_k01, accuracy_k03, accuracy_k05, accuracy_k10,
-  accuracy_k15, accuracy_k20, accuracy_k25, accuracy_tri_k01, accuracy_tri_k03, accuracy_tri_k05,   accuracy_tri_k10, accuracy_tri_k15, accuracy_tri_k20, accuracy_tri_k25)
+  accuracy_k15, accuracy_k20, accuracy_k25, accuracy_tri_k01, accuracy_tri_k03,
+  accuracy_tri_k05,   accuracy_tri_k10, accuracy_tri_k15, accuracy_tri_k20, 
+  accuracy_tri_k25)
   
 binary_knn = data.frame(clusters, data, accuracies)
 binary_knn
@@ -385,12 +389,14 @@ clustering_df <- read.csv("data/clustering-data.csv",
     stringsAsFactors = FALSE)
 
 head(clustering_df)
+
+set.seed(10)
 ```
 
 
 #### i. Plot the dataset using a scatter plot.
 
-```{r}
+```{r fig.align = 'left'}
 ggplot(clustering_df, aes(x = x, y = y)) +
   geom_point() +
   ggtitle("Clustering Data")
@@ -399,41 +405,47 @@ ggplot(clustering_df, aes(x = x, y = y)) +
 #### ii. Fit the dataset using the k-means algorithm from k=2 to k=12. Create a scatter plot of the resultant clusters for each value of k.
 
 
-```{r}
+
+```{r fig.align = 'left'}
 # k = 2
 clustering.k2 <- kmeans(clustering_df, centers = 2, nstart = 20)
 
 fviz_cluster(clustering.k2, data = clustering_df)
 ```
-```{r}
+
+```{r fig.align = 'left'}
 # k = 3
 clustering.k3 <- kmeans(clustering_df, centers = 3, nstart = 20)
 
 fviz_cluster(clustering.k3, data = clustering_df)
 ```
 
-```{r}
+
+```{r fig.align = 'left'}
 # k = 4
 clustering.k4 <- kmeans(clustering_df, centers = 4, nstart = 20)
 
 fviz_cluster(clustering.k4, data = clustering_df)
 ```
 
-```{r}
+
+```{r fig.align = 'left'}
 # k = 5
 clustering.k5 <- kmeans(clustering_df, centers = 5, nstart = 20)
 
 fviz_cluster(clustering.k5, data = clustering_df)
 ```
 
-```{r}
+
+```{r fig.align = 'left'}
 # k = 6
 clustering.k6 <- kmeans(clustering_df, centers = 6, nstart = 20)
 
 fviz_cluster(clustering.k6, data = clustering_df)
 ```
 
-```{r}
+
+```{r fig.align = 'left'}
 # k = 7
 clustering.k7 <- kmeans(clustering_df, centers = 7, nstart = 20)
 
@@ -441,7 +453,8 @@ fviz_cluster(clustering.k7, data = clustering_df)
 ```
 
 
-```{r}
+
+```{r fig.align = 'left'}
 # k = 8
 clustering.k8 <- kmeans(clustering_df, centers = 8, nstart = 20)
 
@@ -449,31 +462,29 @@ fviz_cluster(clustering.k8, data = clustering_df)
 ```
 
 
-```{r}
+
+```{r fig.align = 'left'}
 # k = 9
 clustering.k9 <- kmeans(clustering_df, centers = 9, nstart = 20)
 
 fviz_cluster(clustering.k9, data = clustering_df)
 ```
 
-
-```{r}
+```{r fig.align = 'left'}
 # k = 10
 clustering.k10 <- kmeans(clustering_df, centers = 10, nstart = 20)
 
 fviz_cluster(clustering.k10, data = clustering_df)
 ```
 
-
-```{r}
+```{r fig.align = 'left'}
 # k = 11
 clustering.k11 <- kmeans(clustering_df, centers = 11, nstart = 20)
 
 fviz_cluster(clustering.k11, data = clustering_df)
 ```
 
-
-```{r}
+```{r fig.align = 'left'}
 # k = 12
 clustering.k12 <- kmeans(clustering_df, centers = 12, nstart = 20)
 
@@ -483,10 +494,8 @@ fviz_cluster(clustering.k12, data = clustering_df)
 #### iii. As k-means is an unsupervised algorithm, you cannot compute the accuracy as there are no correct values to compare the output to. Instead, you will use the average distance from the center of each cluster as a measure of how well the model fits the data. To calculate this metric, simply compute the distance of each data point to the center of the cluster it is assigned to and take the average value of all of those distances.
 
 
-### e. Calculate this average distance from the center of each cluster for each value of k and plot it as a line chart where k is the x-axis and the average distance is the y-axis.
-
-```{r}
-clustering_best <- FitKMeans(clustering_df, max.clusters = 40, nstart = 20)
+```{r fig.align = 'left'}
+clustering_best <- FitKMeans(clustering_df, max.clusters = 13, nstart = 20)
 
 clustering_best
 
@@ -494,6 +503,24 @@ PlotHartigan(clustering_best)
 ```
 
 
+### e. Calculate this average distance from the center of each cluster for each value of k and plot it as a line chart where k is the x-axis and the average distance is the y-axis.
+
+```{r}
+k.max <- 12
+
+clustering_best
+
+wss <- sapply(2:k.max, function(k){kmeans(clustering_df, k, nstart = 50, iter.max = 12)$tot.withinss})
+wss
+```
+
+```{r fig.align = 'left'}
+plot(2:k.max, wss,
+     type = 'b', pch = 19, frame = FALSE,
+     xlab = 'Number of clusters k',
+     ylab = 'Total within - clusters sum of squares')
+```
+
 ### f. One way of determining the “right” number of clusters is to look at the graph of k versus average distance and finding the “elbow point”. Looking at the graph you generated in the previous example, what is the elbow point for this dataset?
 
-36 clusters
+Looking at 2 through 12 clusters, 6 clusters is the best.
