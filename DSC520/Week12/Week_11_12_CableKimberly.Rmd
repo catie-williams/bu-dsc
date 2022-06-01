@@ -521,6 +521,17 @@ plot(2:k.max, wss,
      ylab = 'Total within - clusters sum of squares')
 ```
 
+
+```{r fig.align = 'left'}
+clustersBest <- FitKMeans(clustering_df, max.clusters = 40, nstart = 20, seed = 10)
+clustersBest
+```
+
+```{r fig.align = 'left'}
+PlotHartigan(clustersBest)
+```
+
 ### f. One way of determining the “right” number of clusters is to look at the graph of k versus average distance and finding the “elbow point”. Looking at the graph you generated in the previous example, what is the elbow point for this dataset?
 
-Looking at 2 through 12 clusters, 6 clusters is the best.
+Looking at 2 through 12 clusters, 5 clusters is the best.
+Looking at clusters up to 40, 33 clusters is the best.

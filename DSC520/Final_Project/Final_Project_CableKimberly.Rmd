@@ -412,7 +412,7 @@ else?
 
 How I addressed the problem
 
-1.  I looked at 3 datasets to help me determine if the size of a dog
+1.  I looked at 4 datasets to help me determine if the size of a dog
     determines its intelligence level.
 
     a.  AKC Breed Information: This dataset contained information such
@@ -430,7 +430,7 @@ How I addressed the problem
 
 3.  Did some descriptive statistics
 
-    a.  Full dataset
+    a.  Obey, Avg Weight, and Avg Height
 
 |        | Obey | Avg Weight | Avg Height |
 |--------|------|------------|------------|
@@ -439,7 +439,7 @@ How I addressed the problem
 | Mean   | 0.58 | 62.84      | 20.59      |
 | Max    | 0.95 | 182.50     | 28.5       |
 
-    b.  By Classification Obey Avg Weight Avg Height
+    b.  By Classification: Obey, Avg Weight, and Avg Height
 
 Brightest Dogs
 
@@ -503,9 +503,12 @@ Lowest Degree of Working/Obedience Intelligence
 
     e.  Correlations:
 
-        i. Obey Percentage vs Average Weight: Correlation: 0.185; p-value: 0.387
-        ii. Obey Percentage vs Heterozygosity x10.4: Correlation: 0.09; p-value: 0.669
-        iii. Average Weight vs Heterozygosity x10.4: Correlation: -0.32; p-value: 0.869
+        i. Obey Percentage vs Average Weight: 
+            Correlation: 0.185; p-value: 0.387
+        ii. Obey Percentage vs Heterozygosity x10.4: 
+            Correlation: 0.09; p-value: 0.669
+        iii. Average Weight vs Heterozygosity x10.4: 
+            Correlation: -0.32; p-value: 0.869
         
 
 4.  Regression Models
